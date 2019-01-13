@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+ export TERM="xterm-256color"
+
 # Path to your oh-my-zsh installation.
 export ZSH=/home/kinochi/.oh-my-zsh
 
@@ -118,6 +120,9 @@ export PATH=$VULKAN_SDK/bin:$PATH
 export LD_LIBRARY_PATH=$VULKAN_SDK/lib:$LD_LIBRARY_PATH
 export VK_LAYER_PATH=$VULKAN_SDK/etc/explicit_layer.d
 
+export OPTIX_SDK=~/NVIDIA-OptiX-SDK-5.1.0-linux64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OPTIX_SDK/lib64
 setxkbmap -option 'caps:ctrl_modifier'
 xcape -e 'Caps_Lock=Escape'
 
+export Optix_INSTALL_DIR=$OPTIX_SDK

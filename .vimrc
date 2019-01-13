@@ -3,6 +3,7 @@ set smartindent
 set tabstop=4
 set shiftwidth=4
 set nocompatible	" be iMproved, required
+set encoding=utf-8
 filetype off		" required
 
 " set the runtime path to include Vundle and initialize
@@ -11,6 +12,7 @@ call vundle#begin('~/.vim/bundle')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+"Plugin 'broesler/jupyter-vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-surround'
@@ -35,7 +37,8 @@ Plugin 'wincent/terminus'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'petrbroz/vim-glsl'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'CoatiSoftware/vim-sourcetrail'
 Plugin 'petRUShka/vim-opencl'
 Plugin 'google/vim-maktaba'
@@ -45,6 +48,13 @@ Plugin 'ternjs/tern_for_vim', {'for': 'javascript'}
 Plugin 'honza/vim-snippets'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'AndrewRadev/linediff.vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'ivanov/vim-ipython'
+Plugin 'szymonmaszke/vimpyter'
+Plugin 'ervandew/supertab'
+"Plugin 'svermeulen/vim-easyclip'
+Plugin 'tpope/vim-repeat'
 
 call vundle#end()			" required
 filetype plugin indent on	" required
@@ -73,6 +83,8 @@ set background=dark
 let g:solarized_termcolors=16
 syntax enable
 colorscheme PaperColor
+"setting statusline theme
+let g:airline_theme = 'powerlineish'
 
 " Disable Arrow keys in Escape mode
 "map <up> <nop>
@@ -82,8 +94,8 @@ colorscheme PaperColor
 nmap <F8> :TagbarToggle<CR>
 nmap <F9> :TagbarOpen j<CR>
 nmap <F2> :NERDTreeToggle<CR>
-nmap // <leader>c<space>
-vmap // <leader>cs
+"nmap // <leader>c<space>
+"vmap // <leader>cs
 map <F3> :call CurtineIncSw()<CR>
 noremap <leader>gD :YcmCompleter GoToDefinition<CR>
 noremap <leader>gd :YcmCompleter GoToDeclaration<CR>
@@ -105,15 +117,16 @@ autocmd VimLeave * silent exec "! echo -ne '\e[5 q'"
 
 let g:ycm_python_binary_path = 'python'
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+
 " enhance YCM JS completion with tern's smarts
-autocmd FileType javascript setlocal omnifunc=tern#Complete
+"autocmd FileType javascript setlocal omnifunc=tern#Complete
 
 map <C-t>h :tabr<cr>
 
 map <C-t>l :tabl<cr>
-map <C-t>j :tabp<cr>
+map <C-t>p :tabp<cr>
 
-map <C-t>k :tabn<cr>
+map <C-t>n :tabn<cr>
 map <C-t>t :tabnew<cr>
 
 
@@ -137,34 +150,45 @@ let g:clang_format#style_options = {
 nmap <leader><C-m> :LivedownToggle<CR>
 "let g:livedown_autorun = 1
 let g:livedown_browser = "firefox"
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-autocmd FileType typescript setlocal omnifunc=tern#Complete
+"autocmd FileType javascript setlocal omnifunc=tern#Complete
+"autocmd FileType typescript setlocal omnifunc=tern#Complete
 set completeopt-=preview
 
 
  "YouCompleteMe and UltiSnips compatibility.
-let g:UltiSnipsExpandTrigger = '<Tab>'
-let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+"let g:UltiSnipsExpandTrigger = '<Tab>'
+"let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+"let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
  "Prevent UltiSnips from removing our carefully-crafted mappings.
 "let g:UltiSnipsMappingsToIgnore = ['autocomplete']
 
 
 
-if has('autocmd')
-  augroup WincentAutocomplete
-	autocmd!
-	autocmd! User UltiSnipsEnterFirstSnippet
-	autocmd User UltiSnipsEnterFirstSnippet call autocomplete#setup_mappings()
-	autocmd! User UltiSnipsExitLastSnippet
-	autocmd User UltiSnipsExitLastSnippet call autocomplete#teardown_mappings()
-  augroup END
-endif
+"if has('autocmd')
+  "augroup WincentAutocomplete
+	"autocmd!
+	"autocmd! User UltiSnipsEnterFirstSnippet
+	"autocmd User UltiSnipsEnterFirstSnippet call autocomplete#setup_mappings()
+	"autocmd! User UltiSnipsExitLastSnippet
+	"autocmd User UltiSnipsExitLastSnippet call autocomplete#teardown_mappings()
+  "augroup END
+"endif
 
+"let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+"let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+"let g:ycm_key_list_accept_completion = ['<C-y>']
+
+" make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-let g:ycm_key_list_accept_completion = ['<C-y>']
+let g:SuperTabDefaultCompletionType = '<C-j>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsListSnippets = "<c-q>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
  "Additional UltiSnips config.
 let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
@@ -186,7 +210,62 @@ let g:ycm_filetype_blacklist = {
       \   'infolog': 1,
       \   'mail': 1
 \ }
-"let g:UltiSnipsListSnippets="<C-l>"
+let g:UltiSnipsListSnippets="<C-0>"
 let g:ycm_add_preview_to_completeopt = 1
 
 vmap <leader>ld :Linediff<C-m>
+
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 12
+set encoding=utf8
+let g:airline_powerline_fonts = 1
+
+
+autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
+autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
+autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
+
+
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+
+" old vim-powerline symbols
+"let g:airline_left_sep = '⮀'
+"let g:airline_left_alt_sep = '⮁'
+"let g:airline_right_sep = '⮂'
+"let g:airline_right_alt_sep = '⮃'
+"let g:airline_symbols.branch = '⭠'
+"let g:airline_symbols.readonly = '⭤'
+"let g:airline_symbols.linenr = '⭡'
+
+"call AirlineTheme('powerlineish')
