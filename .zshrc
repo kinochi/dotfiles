@@ -126,3 +126,4 @@ setxkbmap -option 'caps:ctrl_modifier'
 xcape -e 'Caps_Lock=Escape'
 
 export Optix_INSTALL_DIR=$OPTIX_SDK
+export ANDROID_SDK_ROOT=~/Android/sdk/

@@ -30,7 +30,7 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'lervag/vimtex'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'benmills/vimux'
+"Plugin 'benmills/vimux'
 Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'jansenm/vim-cmake'
 Plugin 'wincent/terminus'
@@ -44,7 +44,7 @@ Plugin 'petRUShka/vim-opencl'
 Plugin 'google/vim-maktaba'
 Plugin 'shime/vim-livedown'
 Plugin 'google/vim-codefmt'
-Plugin 'ternjs/tern_for_vim', {'for': 'javascript'}
+"Plugin 'ternjs/tern_for_vim', {'for': 'javascript'}
 Plugin 'honza/vim-snippets'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'AndrewRadev/linediff.vim'
@@ -52,7 +52,7 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'ivanov/vim-ipython'
 Plugin 'szymonmaszke/vimpyter'
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 "Plugin 'svermeulen/vim-easyclip'
 Plugin 'tpope/vim-repeat'
 
@@ -155,40 +155,15 @@ let g:livedown_browser = "firefox"
 set completeopt-=preview
 
 
- "YouCompleteMe and UltiSnips compatibility.
-"let g:UltiSnipsExpandTrigger = '<Tab>'
-"let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-"let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
- "Prevent UltiSnips from removing our carefully-crafted mappings.
-"let g:UltiSnipsMappingsToIgnore = ['autocomplete']
-
-
-
-"if has('autocmd')
-  "augroup WincentAutocomplete
-	"autocmd!
-	"autocmd! User UltiSnipsEnterFirstSnippet
-	"autocmd User UltiSnipsEnterFirstSnippet call autocomplete#setup_mappings()
-	"autocmd! User UltiSnipsExitLastSnippet
-	"autocmd User UltiSnipsExitLastSnippet call autocomplete#teardown_mappings()
-  "augroup END
-"endif
-
-"let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
-"let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-"let g:ycm_key_list_accept_completion = ['<C-y>']
-
-" make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-j>'
+let g:ycm_key_list_accept_completion = ['<C-y>']
 
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsListSnippets = "<c-q>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+ "YouCompleteMe and UltiSnips compatibility.
+let g:UltiSnipsExpandTrigger = '<C-l>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
  "Additional UltiSnips config.
 let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
